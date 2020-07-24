@@ -1,0 +1,6 @@
+{
+
+  "chat_list" : "/api/chats",
+  "single_chat" : "/api/chats/:id"
+
+}
