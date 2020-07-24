@@ -1,8 +1,6 @@
 const path = require("path")
 const fsp = require("fs").promises
 
-const stats = require("./stats")
-
 const public = path.resolve("./chats/public/")
 
 exports.getChatList = async (req, res) => {
