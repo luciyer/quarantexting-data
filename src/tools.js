@@ -192,6 +192,28 @@ const getTopWords = (array, limit) => {
 
 }
 
+const getWeekMinutes = (data) => {
+
+  let getMinuteOfWeek = (date) => {
+    return (date.getDay() * 1440) +
+           (date.getHours() * 60) +
+           date.getMinutes();
+  }
+
+  let temp = d3arr.rollup(data,
+    v => v.length,
+    d => getMinuteOfWeek(new Date(d.date)))
+
+  return [...temp].map(d => {
+    return {
+      minute: d[0],
+      count: d[1]
+    }
+  })
+
+
+}
+
 const getMinutes = (data) => {
 
   let getDayOfWeek = (date) => {
@@ -278,6 +300,7 @@ const getStats = (data) => {
 module.exports = {
   getStats,
   getMinutes,
+  getWeekMinutes,
   getTopWords,
   getResponseTimeStats,
   getResponseTimeArray,

@@ -79,7 +79,10 @@ const generateStats = async (chat_id) => {
   const buffer = await fsp.readFile(`${output_dir}/${chat_id}.json`)
   const parsed = JSON.parse(buffer)
 
-  const by_minute = tools.getMinutes(parsed)
+  const by_minute = {
+    daily: tools.getMinutes(parsed),
+    weekly: tools.getWeekMinutes(parsed)
+  }
 
   const author_split = {
     author1: parsed.filter(d => d.author === "Author 1"),
