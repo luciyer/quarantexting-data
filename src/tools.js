@@ -174,7 +174,7 @@ const getTopWords = (array, limit) => {
 
   })
 
-  a1_words.forEach( (v, k) => {
+  a2_words.forEach( (v, k) => {
 
     let a2_ct = v,
         a1_ct = a1_words.get(k) || 0,
