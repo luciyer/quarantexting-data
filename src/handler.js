@@ -9,8 +9,8 @@ exports.getChatList = async (req, res) => {
 
   const chat_list = []
 
-  for (const file of await fsp.readdir(json_folder)) {
-    const file_loc = `${json_folder}/${file}`
+  for (const file of await fsp.readdir(public)) {
+    const file_loc = `${public}/${file}`
     chat_list.push({ chat_id: path.basename(file_loc, ".json") })
   }
 
