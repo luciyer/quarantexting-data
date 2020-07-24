@@ -1,4 +1,5 @@
 const d3 = require("d3")
+const d3arr = require("d3-array")
 
 const constants = require("./constants")
 
@@ -60,7 +61,7 @@ const mediaCount = (array, media_tag) => {
 }
 
 const emojiCount = (array) => {
-  return d3.sum(array.map(d => (d.message.match(constants.emoji_regex) || []).length)) 
+  return d3.sum(array.map(d => (d.message.match(constants.emoji_regex) || []).length))
 }
 
 const getResponseTimeArray = (array, author) => {
@@ -191,6 +192,42 @@ const getTopWords = (array, limit) => {
 
 }
 
+const getMinutes = (data) => {
+
+  let getDayOfWeek = (date) => {
+    return ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][date.getDay()]
+  }
+
+  let getMinuteOfDay = (date) => {
+    return (date.getHours() * 60) + date.getMinutes()
+  }
+
+  let temp = d3arr.rollup(data,
+    v => v.length,
+    d => getDayOfWeek(new Date(d.date)),
+    d => getMinuteOfDay(new Date(d.date))
+  )
+
+  let parsed = [...temp].map(d => {
+    return [...d[1]].map(h => {
+      return {
+        day: d[0],
+        minute: h[0],
+        count: h[1]
+      }
+    })
+  })
+
+  let flattened = []
+
+  parsed.map(d => {
+    d.forEach(e => flattened.push(e))
+  })
+
+  return flattened
+
+}
+
 const getStats = (data) => {
 
   return {
@@ -240,6 +277,7 @@ const getStats = (data) => {
 
 module.exports = {
   getStats,
+  getMinutes,
   getTopWords,
   getResponseTimeStats,
   getResponseTimeArray,
