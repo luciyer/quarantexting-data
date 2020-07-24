@@ -192,36 +192,20 @@ const getTopWords = (array, limit) => {
 
 }
 
-const getWeekMinutes = (data) => {
-
-  let getMinuteOfWeek = (date) => {
-    return (date.getDay() * 1440) +
-           (date.getHours() * 60) +
-           date.getMinutes();
-  }
-
-  let temp = d3arr.rollup(data,
-    v => v.length,
-    d => getMinuteOfWeek(new Date(d.date)))
-
-  return [...temp].map(d => {
-    return {
-      minute: d[0],
-      count: d[1]
-    }
-  })
-
-
-}
-
 const getMinutes = (data) => {
 
+  const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+
   let getDayOfWeek = (date) => {
-    return ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][date.getDay()]
+    return weekdays[date.getDay()]
   }
 
   let getMinuteOfDay = (date) => {
     return (date.getHours() * 60) + date.getMinutes()
+  }
+
+  let getMinuteOfWeek = (day, day_minute) => {
+    return (1440 * weekdays.indexOf(day)) + day_minute
   }
 
   let temp = d3arr.rollup(data,
@@ -235,6 +219,7 @@ const getMinutes = (data) => {
       return {
         day: d[0],
         minute: h[0],
+        week_minute: getMinuteOfWeek(d[0], h[0]),
         count: h[1]
       }
     })
@@ -300,7 +285,6 @@ const getStats = (data) => {
 module.exports = {
   getStats,
   getMinutes,
-  getWeekMinutes,
   getTopWords,
   getResponseTimeStats,
   getResponseTimeArray,
