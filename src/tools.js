@@ -60,9 +60,7 @@ const mediaCount = (array, media_tag) => {
 }
 
 const emojiCount = (array) => {
-  return d3.sum(
-    array.map(d => d.message.match(constants.emoji_regex) || []).length
-  )
+  return d3.sum(array.map(d => (d.message.match(constants.emoji_regex) || []).length)) 
 }
 
 const getResponseTimeArray = (array, author) => {
