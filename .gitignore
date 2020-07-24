@@ -3,6 +3,7 @@ node_modules/
 
 package-lock.json
 
-chats/
+chats/raw/
+chats/parsed/
 
 .DS_Store

@@ -3,7 +3,7 @@ const fsp = require("fs").promises
 
 const stats = require("./stats")
 
-const json_folder = path.resolve("./chats/parsed/")
+const public = path.resolve("./chats/public/")
 
 exports.getChatList = async (req, res) => {
 
@@ -20,8 +20,11 @@ exports.getChatList = async (req, res) => {
 
 exports.getChatData = async (req, res) => {
 
-  const data = await stats.generate(req.params.id)
+  const file_loc = `${public}/${req.params.id}.json`
 
-  res.status(200).json(data)
-  
+  const data = await fsp.readFile(file_loc)
+  const parsed = JSON.parse(data)
+
+  res.status(200).json(parsed)
+
 }
